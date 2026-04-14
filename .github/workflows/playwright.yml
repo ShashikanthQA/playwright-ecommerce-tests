@@ -3,29 +3,34 @@ name: Playwright Tests
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # ✅ Start your app
-      - run: npm run build
-      - run: npm run start &
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
-      # ✅ Wait for server
-      - run: npx wait-on http://localhost:3000
+      # ✅ START YOUR APP HERE
+      - name: Start application
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:3000
 
-      # ✅ Install browsers
-      - run: npx playwright install --with-deps
-
-      # ✅ Run tests
-      - run: npx playwright test
+      # ✅ RUN TESTS
+      - name: Run Playwright tests
+        run: npx playwright test
