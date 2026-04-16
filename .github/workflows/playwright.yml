@@ -20,17 +20,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # ✅ START YOUR APP HERE
-      - name: Start application
-        run: |
-          npm run dev &
-          npx wait-on http://localhost:3000
-
-      # ✅ RUN TESTS
       - name: Run Playwright tests
         run: npx playwright test

@@ -7,9 +7,7 @@ export class ProductDetailPage {
   async gotoHome() {
     await this.page.goto("http://localhost:3000/");
 
-    await expect(
-      this.page.getByRole("heading", { name: "Products" })
-    ).toBeVisible();
+    await expect(this.page.getByRole("heading", { name: "Products" })).toBeVisible();
   }
 
   //  Click first product 
